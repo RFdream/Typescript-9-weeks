@@ -15,8 +15,14 @@
       <div class="main__content">
           <div class="circle__large left"></div>
           <div class="circle__large mid" :class="{extend: extend}">
+            <div class="wrapper right">
+                <div class="circle_animation circle-right" :class="{'animate-right': working}"></div>
+            </div>
+            <div class="wrapper left">
+                <div class="circle_animation circle-left" :class="{'animate-left': working}"></div>
+            </div>
             <div class="content">
-                Clean up the desk
+                {{ doing }}
             </div>
             <div class="content time" v-if="work != '00:00'">{{ work }}</div>
             <div class="content time" v-if="work == '00:00'">{{ rest }}</div>
@@ -33,6 +39,7 @@
                 </div> 
             </div>
           </div>
+          <div class="circle__dot"><img src="../assets/Intersection 1.svg" alt="" width=220></div>
           <div class="circle__large right" :class="{'circle__super': extend}">
               <div class="menu">
                   <div class="circle__medium" :class="{'active': selection === 'list'}" @click="listing('list')">
@@ -127,7 +134,7 @@
           </div>
       </div>
       <div class="main__footer" :class="{extend: extend}">
-          Next: Feed the cat
+          Next: {{ nextTodo }}
       </div>
   </div>
 </template>
@@ -268,6 +275,27 @@ export default class Clock extends Vue{
     mounted() {
         this.draw()
     }
+    get doing(){
+        let todo: string = ''
+        let temp: Array<todoObject> = []
+        temp = this.todos.filter((item: any) => {
+            return item.finish === false
+        })
+        todo = temp[0].content
+        
+        return todo
+    }
+
+    get nextTodo() {
+        let todo: string = ''
+        let temp: Array<todoObject> = []
+        temp = this.todos.filter((item: any) => {
+            return item.finish === false
+        })
+        todo = temp[1].content
+        
+        return todo
+    }
 }
 </script>
 
@@ -340,6 +368,11 @@ export default class Clock extends Vue{
                 position: absolute
                 z-index: 1
                 opacity: 0.7
+
+            .circle__dot
+                position: absolute
+                top: 86%
+                left: 70%
 
             .left
                 left: -190px
@@ -618,17 +651,74 @@ export default class Clock extends Vue{
             .mid
                 left: 50%
                 transform: translate(-50%, 0)
-                border: 8px solid #F2F0C9
                 height: 400px
                 width: 400px
-                border-radius: 400px
-                background-color: #BC2B35
+                background-color: transparent
                 color: #F2F0C9
                 text-align: center
 
+                .wrapper
+                    width: 200px
+                    height: 400px
+                    position: absolute
+                    top: 0
+                    overflow: hidden
+
+                    .circle_animation
+                        width: 384px
+                        height: 384px
+                        border: 8px solid rgba(162, 5, 5, 0.39)
+                        border-radius: 50%
+                        position: absolute
+                        top: 0
+                        transform: rotate(-135deg)
+
+                    .circle-right
+                        border-top: 8px solid #F2F0C9
+                        border-right: 8px solid #F2F0C9
+                        right: 0
+
+                    .animate-right
+                        animation: rightTurn 1500s linear infinite
+
+                    .circle-left
+                        border-bottom: 8px solid #F2F0C9
+                        border-left: 8px solid #F2F0C9
+                        left: 0
+
+                    .animate-left
+                        animation: leftTurn 1500s linear infinite
+
+                @keyframes rightTurn
+                    0%
+                        transform: rotate(-135deg)
+
+                    50%
+                        transform: rotate(45deg)
+                    
+                    100%
+                        transform: rotate(45deg)
+
+                @keyframes leftTurn
+                    0%
+                        transform: rotate(-135deg)
+                    
+                    50%
+
+                        transform: rotate(-135deg)
+                        
+                    100%
+                        transform: rotate(45deg)
+                .right
+                    right: 0
+                
+                .left
+                    left: 0
+
+
                 .content
                     font-size: 25px
-                    opacity: 1
+                    opacity: 1 !important
                     margin-top: 85px
 
                 .time
