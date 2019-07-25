@@ -12,7 +12,7 @@ body
             color: #F2F0C9
             margin-top: 35px
             display: flex
-            
+
 
             .header
                 margin-left: 51px
@@ -52,7 +52,7 @@ body
                 .fa-times
                     display: initial
 
-            
+
 
         &__content
             height: 380px
@@ -69,12 +69,12 @@ body
 
             .circle__dot
                 position: absolute
-                top: 86%
+                bottom: 0px
                 left: 70%
 
             .left
                 left: -190px
-            
+
             .right
                 right: -190px
 
@@ -84,7 +84,7 @@ body
                     left: 110px
                     top: 50%
                     transform: translate(0, -50%)
-                    
+
                     .circle__medium
                         width: 60px
                         height: 60px
@@ -121,7 +121,7 @@ body
                     .input-bar
                         width: 480px
                         height: 52px
-                        
+
                         .add-mission
                             outline: none
                             width: 100%
@@ -133,8 +133,8 @@ body
                             line-height: 35px
                             text-indent: 30px
                             color: rgb(208, 50, 60)
-                            
-                        
+
+
                         ::placeholder
                             color: #BC2B35
                             opacity: 0.55
@@ -229,7 +229,7 @@ body
                                 margin-top: -3px
                                 margin-left: 5px
 
-                            input:checked ~.checkbox:after 
+                            input:checked ~.checkbox:after
                                 display: block
 
                             .item-content
@@ -248,7 +248,7 @@ body
                                 list-style: none
                                 padding: 0
                                 margin: 0
-                            
+
                             li
                                 display: flex
 
@@ -275,11 +275,11 @@ body
 
                         .title
                             font-size: 22px
-                        
+
                         .content
                             font-size: 35px
-                        
-                        .weekly 
+
+                        .weekly
                             margin-left: 12.5%
                         .totally
                             margin-left: 12.5%
@@ -385,7 +385,7 @@ body
 
                             .fa-angle-down
                                 margin-left: 15px
-            
+
             .mid
                 left: 50%
                 transform: translate(-50%, 0)
@@ -394,6 +394,7 @@ body
                 background-color: transparent
                 color: #F2F0C9
                 text-align: center
+                position: relative
 
                 .wrapper
                     width: 200px
@@ -444,23 +445,23 @@ body
 
                     50%
                         transform: rotate(45deg)
-                    
+
                     100%
                         transform: rotate(45deg)
 
                 @keyframes leftTurn
                     0%
                         transform: rotate(-135deg)
-                    
+
                     50%
 
                         transform: rotate(-135deg)
-                        
+
                     100%
                         transform: rotate(45deg)
                 .right
                     right: 0
-                
+
                 .left
                     left: 0
 
@@ -468,20 +469,110 @@ body
                 .content
                     font-size: 25px
                     opacity: 1 !important
-                    margin-top: 85px
+                    position: absolute
+                    top: 100px
+                    left: 50%
+                    transform: translate(-50%, 0)
+
 
                 .time
                     font-size: 72px
                     margin-top: 30px
                     letter-spacing: 15px
-            
+
+            @media only screen and (min-width: 1024px)
+                .circle__large
+                    height: 600px
+                    width: 600px
+                    border-radius: 600px
+                    background-color: #D9343F
+                    position: absolute
+                    z-index: 1
+                    opacity: 0.7
+                .left
+                    left: -300px
+
+                .right
+                    right: -300px
+
+                .circle__super
+                    height: 1200px
+                    width: 1200px
+                    border-radius: 1200px
+                    right: -400px
+                    top: -100px
+
+                .mid
+                    left: 50%
+                    transform: translate(-50%, 0)
+                    height: 600px
+                    width: 600px
+                    background-color: transparent
+                    color: #F2F0C9
+                    text-align: center
+
+                    .wrapper
+                        width: 300px
+                        height: 600px
+                        position: absolute
+                        top: 0
+                        overflow: hidden
+
+                        .circle_animation
+                            width: 584px
+                            height: 584px
+                            border: 8px solid rgba(162, 5, 5, 0.39)
+                            border-radius: 50%
+                            position: absolute
+                            top: 0
+                            transform: rotate(-135deg)
+
+                        .circle-right
+                            border-top: 8px solid #F2F0C9
+                            border-right: 8px solid #F2F0C9
+                            right: 0
+
+                        .animate-right
+                            &__1500
+                                animation: rightTurn 1500s linear infinite
+                                animation-play-state: running
+                            &__1200
+                                animation: rightTurn 1200s linear infinite
+                            &__900
+                                animation: rightTurn 900s linear infinite
+                            &__600
+                                animation: rightTurn 600s linear infinite
+
+                            &__pause
+                                animation-play-state: pause
+
+                        .circle-left
+                            border-bottom: 8px solid #F2F0C9
+                            border-left: 8px solid #F2F0C9
+                            left: 0
+
+                        .animate-left
+                            animation: leftTurn 1500s linear infinite
+
+                    .content
+                        font-size: 32px
+
+                    .time
+                        font-size: 108px
+                        position: absolute
+                        top: 50%
+                        left: 50%
+                        transform: translate(-50%, -60%)
+
             .extend
                 left: 15%
                 transform: translate(-15%, 0)
 
             .action
-                margin-top: 55px
-                margin-left: 95px
+                position: absolute
+                left: 58%
+                transform: translate(-50%, 0)
+                bottom: 80px
                 width: 300px
                 height: 70px
                 display: flex
@@ -519,24 +610,21 @@ body
                     border: none
                     font-size: 18px
                     line-height: 35px
-                    
-                
+
                 ::placeholder
                     color: rgba(242, 240, 201, 0.55)
-                // .svg-inline--fa
-                //     position: absolute
-                //     right: 285px
-                //     top: 268px
-                //     color: #BC2B35
-                //     line-height: 35px
-                //     z-index: 100
-                //     cursor: pointer
 
                 .svg-inline--fa
                     line-height: 40px
                     padding-top: 10px
                     margin-left: 40px
                     cursor: pointer
+
+            @media only screen and (min-width: 1024px)
+                .mission
+                    top: 50%
+                    left: 100px
+                    transform: translate(0, -50%)
 
             .none
                 display: none
@@ -548,7 +636,15 @@ body
             color: #F2F0C9
             opacity: 0.5
             text-align: center
-            margin-top: 65px
+            position: absolute
+            bottom: 80px
+            left: 50%
+            transform: translate(-50%, 0)
+
+        @media only screen and (min-width: 1024px)
+            &__footer
+                font-size: 28px
 
     .extend
-        transform: translate(-25%, 0)
+        left: 15%
+        transform: translate(55%, 0)
