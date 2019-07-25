@@ -163,7 +163,7 @@ import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import moment from 'moment'
 const Chart = require('chart.js')
-type todoObject = {
+interface TodoObject {
     id: number
     content: string
     finish: boolean
@@ -171,42 +171,42 @@ type todoObject = {
 }
 
 @Component
-export default class Clock extends Vue{
+export default class Clock extends Vue {
     newMission: string = ''
     timer: number = 1500
     settingTimer: number = 1500
-    rest: string = "05:00"
-    status: string = "work"
+    rest: string = '05:00'
+    status: string = 'work'
     pause: boolean = false
     extend: boolean = false
     date: string = moment().format('MMMM,DD YYYY')
     selection: string = ''
     working: boolean = false
-    timeSetting: Array<number> = [25, 20, 15]
-    restTimeSetting: Array<number> = [5, 4, 3, 2, 1]
-    todos: Array<todoObject> = [
+    timeSetting: number[] = [25, 20, 15]
+    restTimeSetting: number[] = [5, 4, 3, 2, 1]
+    todos: TodoObject[] = [
         {
-            'id': 1,
-            'content': 'Clean up the desk',
-            'finish': false,
-            'time': 'July,15 2019'
+            id: 1,
+            content: 'Clean up the desk',
+            finish: false,
+            time: 'July,15 2019'
         },
         {
-            'id': 2,
-            'content': 'Feed the cat',
-            'finish': false,
-            'time': 'July,16 2019'
+            id: 2,
+            content: 'Feed the cat',
+            finish: false,
+            time: 'July,16 2019'
         }
     ]
 
     start(): void {
         if (this.pause) {
             this.pause = false
-            document.getElementById('right-animation').style['animationPlayState'] = 'running'
+            document.getElementById('right-animation')!.style['animationPlayState'] = 'running'
             return
         }
         this.working = true
-        document.getElementById('right-animation').classList.add('animate-right__1500')
+        document.getElementById('right-animation')!.classList.add('animate-right__1500')
         setTimeout(() => {
             if (this.timer <= 0) {
                 this.timer = 300
@@ -220,17 +220,16 @@ export default class Clock extends Vue{
     timePause(): void {
         this.pause = true
         this.working = false
-        document.getElementById('right-animation').style['animationPlayState'] = 'pause'
+        document.getElementById('right-animation')!.style['animationPlayState'] = 'pause'
     }
     listing(value: string): void {
-        console.log('value', value)
         if (value === 'rollback') {
             if (this.extend) {
                 this.extend = false
                 this.selection = ''
                 return
             }
-            else{
+            else {
                 this.selection = 'list'
                 this.extend = true
                 return
@@ -240,22 +239,20 @@ export default class Clock extends Vue{
             this.extend = true
             this.selection = value
         }
-        else if (this.extend === true && this.selection !== value) {
-            this.selection = value
-        }
+        else if (this.extend === true && this.selection !== value) this.selection = value
         else if (this.extend === true && this.selection === value) {
             this.selection = ''
             this.extend = false
         }
         if (value === 'chart' && this.extend === true) {
             this.selection = value
-            this.$nextTick(()=>{
+            this.$nextTick(() => {
                 this.draw()
             })
         }
     }
     end(): void {
-        if(this.status === 'work') {
+        if (this.status === 'work') {
             this.timer = 0
             this.working = false
             this.status = 'rest'
@@ -263,7 +260,7 @@ export default class Clock extends Vue{
     }
 
     addMission(): void {
-        let todo: todoObject = {
+        const todo: TodoObject = {
             id: this.todos.length + 1,
             content: this.newMission,
             finish: false,
@@ -273,17 +270,17 @@ export default class Clock extends Vue{
         this.newMission = ''
     }
 
-    draw(): void {
-        let ctx = document.getElementById('counting')
+    public draw(): void {
+        const ctx = document.getElementById('counting')
         new Chart(ctx, {
             type: 'line',
             data: {
                 labels: ['7/19', '7/20', '7/21', '7/22', '7/23', '7/24', '7/25'],
-                datasets: [{ 
+                datasets: [{
                     defaultFontColor: 'rgba(242, 240, 201, 0.31)',
                     data: [8, 8, 7, 3, 9, 12, 9],
-                    borderColor: "#ffffff",
-                    backgroundColor: "rgba(242, 240, 201, 0.31)",
+                    borderColor: '#ffffff',
+                    backgroundColor: 'rgba(242, 240, 201, 0.31)',
                     fill: true
                 }
                 ]
@@ -299,7 +296,7 @@ export default class Clock extends Vue{
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero:true,
+                            beginAtZero: true,
                             fontColor: 'rgba(242, 240, 201, 1)'
                         },
                     }],
@@ -308,38 +305,36 @@ export default class Clock extends Vue{
                             fontColor: 'rgba(242, 240, 201, 1)'
                         },
                     }]
-                } 
+                }
             }
-        });
+        })
     }
 
-    get work(){
+    get work() {
         let sec = (this.timer % 60).toString()
-        sec = sec.length == 2 ?  sec : '0'+ sec
+        sec = sec.length === 2 ?  sec : '0' + sec
         let min = (Math.floor(this.timer / 60)).toString()
-        min = min.length == 2 ? min : '0'+ min
+        min = min.length === 2 ? min : '0' + min
         return min + ':' + sec
     }
 
-    get doing(){
+    get doing() {
         let todo: string = ''
-        let temp: Array<todoObject> = []
+        let temp: TodoObject[] = []
         temp = this.todos.filter((item: any) => {
             return item.finish === false
         })
         todo = temp.length >= 1 ? temp[0].content : 'Nothing Todo'
-        
         return todo
     }
 
     get nextTodo() {
         let todo: string = ''
-        let temp: Array<todoObject> = []
+        let temp: TodoObject[] = []
         temp = this.todos.filter((item: any) => {
             return item.finish === false
         })
         todo = temp.length >= 2 ? temp[1].content : 'Nothing Next'
-        
         return todo
     }
 }
