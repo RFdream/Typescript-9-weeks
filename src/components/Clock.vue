@@ -16,7 +16,7 @@
           <div class="circle__large left"></div>
           <div class="circle__large mid" :class="{extend: extend}">
             <div class="wrapper right">
-                <div class="circle_animation circle-right" :class="{'animate-right': working}"></div>
+                <div class="circle_animation circle-right" id="right-animation"></div>
             </div>
             <div class="wrapper left">
                 <div class="circle_animation circle-left" :class="{'animate-left': working}"></div>
@@ -120,13 +120,20 @@
                             <div class="dropdown-menu">
                                 <span>25min<i class="fas fa-angle-down fa-lg"></i></span>
                                 <ul class="dropdown-content">
-                                    <li v-for="time in timeSetting" :key="time" class="drop-time" @click="timer = time*60">{{ time }}</li>
+                                    <li v-for="time in timeSetting" :key="time" class="drop-time" @click="timer = time * 60">{{ time }}</li>
                                 </ul>
                             </div>
                         </div>
                       </div>
                       <div class="setting-box">Resting time
-                        <div class="time-setting fixed-setting">5min<i class="fas fa-angle-down fa-lg"></i></div>
+                        <div class="time-setting">
+                            <div class="dropdown-menu">
+                                <span>5min<i class="fas fa-angle-down fa-lg"></i></span>
+                                <ul class="dropdown-content">
+                                    <li v-for="time in restTimeSetting" :key="time" class="drop-time" @click="timer = time * 60">{{ time }}</li>
+                                </ul>
+                            </div>
+                        </div>
                       </div>
                   </div>
                   <div class="setting-space">
@@ -167,6 +174,7 @@ type todoObject = {
 export default class Clock extends Vue{
     newMission: string = ''
     timer: number = 1500
+    settingTimer: number = 1500
     rest: string = "05:00"
     status: string = "work"
     pause: boolean = false
@@ -175,6 +183,7 @@ export default class Clock extends Vue{
     selection: string = ''
     working: boolean = false
     timeSetting: Array<number> = [25, 20, 15]
+    restTimeSetting: Array<number> = [5, 4, 3, 2, 1]
     todos: Array<todoObject> = [
         {
             'id': 1,
@@ -193,9 +202,11 @@ export default class Clock extends Vue{
     start(): void {
         if (this.pause) {
             this.pause = false
+            document.getElementById('right-animation').style['animationPlayState'] = 'running'
             return
         }
         this.working = true
+        document.getElementById('right-animation').classList.add('animate-right__1500')
         setTimeout(() => {
             if (this.timer <= 0) {
                 this.timer = 300
@@ -209,6 +220,7 @@ export default class Clock extends Vue{
     timePause(): void {
         this.pause = true
         this.working = false
+        document.getElementById('right-animation').style['animationPlayState'] = 'pause'
     }
     listing(value: string): void {
         console.log('value', value)

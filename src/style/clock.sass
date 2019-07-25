@@ -331,9 +331,11 @@ body
                             height: 30px
                             line-height: 30px
                             display: flex
+                            position: relative
 
                             .time-setting
-                                margin-left: 55%
+                                position: absolute
+                                right: 15px
 
                                 .dropdown-menu
                                     margin: 0
@@ -415,7 +417,18 @@ body
                         right: 0
 
                     .animate-right
-                        animation: rightTurn 1500s linear infinite
+                        &__1500
+                            animation: rightTurn 1500s linear infinite
+                            animation-play-state: running
+                        &__1200
+                            animation: rightTurn 1200s linear infinite
+                        &__900
+                            animation: rightTurn 900s linear infinite
+                        &__600
+                            animation: rightTurn 600s linear infinite
+
+                        &__pause
+                            animation-play-state: pause
 
                     .circle-left
                         border-bottom: 8px solid #F2F0C9
