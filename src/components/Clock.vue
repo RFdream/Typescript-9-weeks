@@ -118,9 +118,9 @@
                       <div class="setting-box"><span>Working time</span>
                         <div class="time-setting">
                             <div class="dropdown-menu">
-                                <span>25min<i class="fas fa-angle-down fa-lg"></i></span>
+                                <li>{{ settingTimer / 60 }} min<i class="fas fa-angle-down fa-lg"></i></li>
                                 <ul class="dropdown-content">
-                                    <li v-for="time in timeSetting" :key="time" class="drop-time" @click="timer = time * 60">{{ time }}</li>
+                                    <li v-for="time in timeSetting" :key="time" class="drop-time" @click="timer = settingTimer = time * 60">{{ time }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -128,9 +128,9 @@
                       <div class="setting-box">Resting time
                         <div class="time-setting">
                             <div class="dropdown-menu">
-                                <span>5min<i class="fas fa-angle-down fa-lg"></i></span>
+                                <li>{{ restingTimer / 60 }} min<i class="fas fa-angle-down fa-lg"></i></li>
                                 <ul class="dropdown-content">
-                                    <li v-for="time in restTimeSetting" :key="time" class="drop-time" @click="timer = time * 60">{{ time }}</li>
+                                    <li v-for="time in restTimeSetting" :key="time" class="drop-time" @click="restingTimer = time * 60">{{ time }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -175,8 +175,8 @@ export default class Clock extends Vue {
     newMission: string = ''
     timer: number = 1500
     settingTimer: number = 1500
+    restingTimer: number = 300
     rest: string = '05:00'
-    status: string = 'work'
     pause: boolean = false
     extend: boolean = false
     date: string = moment().format('MMMM,DD YYYY')
@@ -209,7 +209,7 @@ export default class Clock extends Vue {
         document.getElementById('right-animation')!.classList.add('animate-right__1500')
         setTimeout(() => {
             if (this.timer <= 0) {
-                this.timer = 300
+                this.timer = this.restingTimer
                 return
             }
             this.timer -= 1
@@ -337,6 +337,7 @@ export default class Clock extends Vue {
         todo = temp.length >= 2 ? temp[1].content : 'Nothing Next'
         return todo
     }
+
 }
 </script>
 
