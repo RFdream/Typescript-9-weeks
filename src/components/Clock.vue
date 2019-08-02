@@ -179,6 +179,7 @@ export default class Clock extends Vue {
     rest: string = '05:00'
     pause: boolean = false
     extend: boolean = false
+    status: string = ''
     date: string = moment().format('MMMM,DD YYYY')
     selection: string = ''
     working: boolean = false
